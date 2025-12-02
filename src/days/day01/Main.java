@@ -5,8 +5,11 @@ class Main {
         ArrayList<String> input = Day01.loadInput("day01Input.txt");
         
         // part one 
-        int zeroCount = Day01.password(input); 
-        System.out.println("password: "+zeroCount);
+        int zeroCount = Day01.passwordOne(input); 
+        System.out.println("first password: "+zeroCount);
 
+        // part two 
+        zeroCount = Day01.passwordTwo(input);
+        System.out.println("second password: "+zeroCount);
     }
 }

@@ -22,7 +22,7 @@ public class Day01 {
         return returnStringArray;
     }
 
-    public static int password(ArrayList<String> list) {
+    public static int passwordOne(ArrayList<String> list) {
         int curr = 50;
         int zeroCount = 0;
 
@@ -34,7 +34,7 @@ public class Day01 {
             else
                 direction = 1; 
 
-            int[] output = dialer(direction, rotation, curr, false);
+            int[] output = dialerOne(direction, rotation, curr);
 
             curr = output[0];
             zeroCount += output[1];
@@ -43,7 +43,52 @@ public class Day01 {
         return zeroCount;
     }
 
-    private static int[] dialer(int direction, int rotations, int dial, boolean modified) {
+    public static int passwordTwo(ArrayList<String> list) {
+        int curr = 50;
+        int zeroCount = 0;
+
+        for (int i = 0; i < list.size(); i++) {
+            int rotation = Integer.parseInt(list.get(i).substring(1));
+            int direction; 
+            if (list.get(i).substring(0, 1).contains("R"))
+                direction = 0;
+            else
+                direction = 1; 
+
+            int[] output = dialerTwo(direction, rotation, curr);
+
+            curr = output[0];
+            zeroCount += output[1];
+        }
+
+        return zeroCount;
+    }
+
+    private static int[] dialerOne(int direction, int rotations, int dial) {
+        // right = 0, left = 1
+        // dial = [0], zeroCount = [1]
+
+        int newDial = dial;
+        int zeroCount = 0;
+        for (int i = 0; i < rotations; i++) {
+            if (direction == 0) 
+                newDial++;
+            else 
+                newDial--;
+
+            if (newDial == 100) 
+                newDial = 0;
+            else if (newDial == -1) 
+                newDial = 99;
+        }
+
+        if (newDial == 0) 
+            zeroCount++;
+
+        return new int[]{newDial, zeroCount};
+    }
+
+    private static int[] dialerTwo(int direction, int rotations, int dial) {
         // right = 0, left = 1
         // dial = [0], zeroCount = [1]
 
@@ -60,13 +105,10 @@ public class Day01 {
             else if (newDial == -1) 
                 newDial = 99;
 
-            if (modified && newDial == 0) 
+            if (newDial == 0) 
                 zeroCount++;
         }
-
-        if (newDial == 0 && !modified) 
-            zeroCount++;
-
+        
         return new int[]{newDial, zeroCount};
     }
 }
